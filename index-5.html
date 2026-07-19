@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Barlows Bingo">
 <meta name="mobile-web-app-capable" content="yes">
-<link rel="manifest" href="data:application/json;charset=utf-8,%7B%22name%22%3A%22Defibrillator%20Lottery%20Bingo%20at%20Barlows%22%2C%22short_name%22%3A%22Barlows%20Bingo%22%2C%22start_url%22%3A%22.%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%220d1117%22%2C%22theme_color%22%3A%22f5c842%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%2520xmlns%3D%2527http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%2527%2520viewBox%3D%25270%25200%2520100%2520100%2527%253E%253Ctext%2520y%3D%2527.9em%2527%2520font-size%3D%252790%2527%253E%25F0%259F%258E%25B1%253C%2Ftext%253E%253C%2Fsvg%253E%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%7D%5D%7D">
+<link rel="manifest" href="data:application/json;charset=utf-8,%7B%22name%22%3A%22Lottery%20Bingo%20at%20Barlows%22%2C%22short_name%22%3A%22Barlows%20Bingo%22%2C%22start_url%22%3A%22.%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%220d1117%22%2C%22theme_color%22%3A%22f5c842%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%2520xmlns%3D%2527http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%2527%2520viewBox%3D%25270%25200%2520100%2520100%2527%253E%253Ctext%2520y%3D%2527.9em%2527%2520font-size%3D%252790%2527%253E%25F0%259F%258E%25B1%253C%2Ftext%253E%253C%2Fsvg%253E%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%7D%5D%7D">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap');
   :root {
@@ -79,22 +79,28 @@
 </style>
 </head>
 <body>
+<style>
+  #appContent { display: none; }
+  #loginPage { display: block; }
+</style>
 
 <header>
   <h1>Lottery Bingo at Barlows</h1>
   <p>Match all 6 numbers first to win the pot!</p>
 </header>
 
-<div id="pinOverlay" style="position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px">
-  <div style="font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:#f5c842;letter-spacing:3px">ADMIN LOGIN</div>
-  <div style="color:#8b949e;font-size:0.9rem">Enter your PIN to make changes</div>
-  <input id="pinInput" type="password" maxlength="6" placeholder="Enter PIN"
-    style="text-align:center;font-size:1.5rem;letter-spacing:8px;padding:12px 20px;width:200px;background:#1e2530;border:2px solid #30363d;border-radius:10px;color:#fff;font-family:'DM Sans',sans-serif;outline:none"
-    onkeydown="if(event.key==='Enter') checkPinGlobal()" />
-  <button class="btn" id="pinUnlockBtn" onclick="checkPinGlobal()">Unlock Admin 🔓</button>
-  <div id="pinError" style="color:#e74c3c;font-size:0.85rem;display:none">❌ Incorrect PIN — try again</div>
-  <div style="margin-top:8px">
-    <a onclick="enterViewMode()" style="color:#8b949e;font-size:0.8rem;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:underline;-webkit-tap-highlight-color:rgba(0,0,0,0);padding:12px 8px;display:inline-block">Continue as viewer (read-only)</a>
+<div id="loginPage" style="background:#0d1117;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;gap:16px;box-sizing:border-box;">
+  <div style="font-family:'Bebas Neue',sans-serif;font-size:2.8rem;color:#f5c842;letter-spacing:3px;text-align:center">🎱 BARLOWS BINGO</div>
+  <div style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:#8b949e;letter-spacing:2px;text-align:center">ADMIN LOGIN</div>
+  <div style="color:#8b949e;font-size:0.9rem;text-align:center;max-width:280px">Enter your PIN to make changes, or tap View Only to browse</div>
+  <input id="pinInput" type="password" inputmode="numeric" maxlength="6" placeholder="Enter PIN"
+    style="text-align:center;font-size:1.5rem;letter-spacing:8px;padding:14px 20px;width:240px;max-width:90vw;background:#1e2530;border:2px solid #30363d;border-radius:10px;color:#fff;font-family:'DM Sans',sans-serif;outline:none;-webkit-appearance:none;appearance:none;display:block;margin-top:8px" />
+  <div id="pinError" style="color:#e74c3c;font-size:0.85rem;display:none;text-align:center">❌ Incorrect PIN — try again</div>
+  <div style="width:240px;max-width:90vw;margin-top:4px">
+    <button onclick="checkPinGlobal()" style="width:100%;background:#f5c842;color:#000;border:none;border-radius:8px;padding:16px;font-weight:700;font-size:1rem;cursor:pointer;font-family:'DM Sans',sans-serif;-webkit-appearance:none;appearance:none;display:block;touch-action:manipulation;-webkit-tap-highlight-color:transparent">🔓 Unlock Admin</button>
+  </div>
+  <div style="width:240px;max-width:90vw;margin-top:4px">
+    <button onclick="enterViewMode()" style="width:100%;background:#1e2530;color:#8b949e;border:1px solid #30363d;border-radius:8px;padding:16px;font-weight:600;font-size:1rem;cursor:pointer;font-family:'DM Sans',sans-serif;-webkit-appearance:none;appearance:none;display:block;touch-action:manipulation;-webkit-tap-highlight-color:transparent">👁️ View Only</button>
   </div>
 </div>
 
@@ -102,7 +108,9 @@
   👁️ VIEW ONLY MODE — You can see all entries and results but cannot make changes.
   <button onclick="showPinOverlay()" style="background:#fff;color:#3a86ff;border:none;border-radius:20px;padding:3px 12px;font-size:0.75rem;font-weight:800;cursor:pointer;margin-left:10px;font-family:'DM Sans',sans-serif">Admin Login</button>
 </div>
+</div><!-- end loginPage -->
 
+<div id="appContent">
 <div class="sync-bar" id="syncBar">🔄 Connecting to live database...</div>
 <div class="pot-banner" id="potBanner">💰 Loading...</div>
 
@@ -112,7 +120,6 @@
   <div class="tab" onclick="showTab('leaderboard',event)">🏆 Leaderboard</div>
   <div class="tab" onclick="showTab('history',event)">📅 Draw History</div>
   <div class="tab" onclick="showTab('rules',event)">📜 Rules</div>
-  <div class="tab" onclick="showTab('funds',event)">❤️ Funds</div>
   <div class="tab" onclick="showTab('settings',event)">⚙️ Settings</div>
 </div>
 <div id="swipeDots" style="display:flex;justify-content:center;gap:6px;padding:8px;background:var(--card);border-bottom:1px solid var(--border)">
@@ -122,7 +129,6 @@
   <div class="swipe-dot" data-tab="3"></div>
   <div class="swipe-dot" data-tab="4"></div>
   <div class="swipe-dot" data-tab="5"></div>
-  <div class="swipe-dot" data-tab="6"></div>
 </div>
 
 <!-- ENTRIES TAB -->
@@ -194,9 +200,9 @@
     <h2>📋 All Entries (<span id="entryCount">0</span>)</h2>
     <div id="entriesList"><div class="empty">Loading...</div></div>
     <div style="margin-top:14px;border-top:1px solid var(--border);padding-top:14px">
-      <button id="bulkImportBtn" class="btn admin-only" onclick="doBulkImport()" style="background:linear-gradient(135deg,#3a86ff,#8338ec);color:#fff;margin-bottom:10px">📥 Import All 177 Entries for New Competition</button><br>
+      <button id="bulkImportBtn" class="btn admin-only" onclick="doBulkImport()" style="background:linear-gradient(135deg,#3a86ff,#8338ec);color:#fff;margin-bottom:10px">📥 Import All 206 Entries for New Competition</button><br>
       <button class="btn danger sm admin-only" onclick="resetEntriesAndDraws()">🗑️ Reset Entries &amp; Draws (Keep Donations)</button>
-      <span style="font-size:0.75rem;color:var(--muted);margin-left:10px">Clears entries &amp; draws only — donations &amp; funds are preserved</span>
+      <span style="font-size:0.75rem;color:var(--muted);margin-left:10px">Clears all entries and draws</span>
     </div>
   </div>
 </div>
@@ -250,34 +256,6 @@
   <div class="card"><h2>📅 Draw History</h2><div id="historyList"><div class="empty">Loading...</div></div></div>
 </div>
 
-<!-- FUNDS TAB -->
-<div class="panel" id="tab-funds">
-  <div class="card">
-    <h2>❤️ Defibrillator Fund Tracker</h2>
-    <div class="stats-grid" id="fundsStats"></div>
-    <div style="margin-top:16px;border-top:1px solid var(--border);padding-top:16px;display:flex;gap:10px;flex-wrap:wrap">
-      <button class="btn" onclick="exportCSV()" style="background:linear-gradient(135deg,#2ecc71,#27ae60);color:#fff">📊 Export Full Report (CSV)</button>
-      <button class="btn" onclick="exportSummary()" style="background:var(--card2);color:var(--text);border:1px solid var(--border)">📄 Export Summary (TXT)</button>
-    </div>
-  </div>
-  <div class="card admin-only">
-    <h2>➕ Log a Donation</h2>
-    <p style="color:var(--muted);font-size:0.85rem;margin-bottom:14px">Record any additional donations made towards the defibrillator fund.</p>
-    <div class="form-grid">
-      <div><label>Donor Name</label><input id="donorName" placeholder="Name or Anonymous" /></div>
-      <div><label>Amount (£)</label><input id="donorAmount" type="number" min="0.01" step="0.01" placeholder="0.00" /></div>
-      <div style="grid-column:1/-1"><label>Note (optional)</label><input id="donorNote" placeholder="e.g. Cash donation, fundraiser night..." /></div>
-    </div>
-    <div style="margin-top:14px"><button class="btn" onclick="addDonation()">Add Donation ❤️</button></div>
-  </div>
-  <div class="card"><h2>📋 Donation Log</h2><div id="donationLog"><div class="empty">Loading...</div></div></div>
-  <div class="card">
-    <h2>🏆 Draw Breakdown</h2>
-    <p style="color:var(--muted);font-size:0.85rem;margin-bottom:14px">50% of each draw's pot goes to the defibrillator fund.</p>
-    <div id="drawBreakdown"><div class="empty">Loading...</div></div>
-  </div>
-</div>
-
 <!-- RULES TAB -->
 <div class="panel" id="tab-rules">
   <div class="card">
@@ -287,7 +265,7 @@
       <li><span>2</span><span>Each entry picks <strong>6 numbers from 1–59</strong>, matching the National Lottery format.</span></li>
       <li><span>3</span><span>We use the <strong>Wednesday and Saturday Lotto draw numbers only</strong>. The Bonus Ball is <strong>NOT included</strong>.</span></li>
       <li><span>4</span><span>Each week, drawn numbers that match your picks get a <strong>✅</strong>. The aim is to match all 6 numbers first.</span></li>
-      <li><span>5</span><span><strong>First to match all 6 wins 50% of the total pot</strong> — the more entries, the bigger the prize! The remaining 50% goes towards funding a <strong>defibrillator</strong>. If two or more players complete on the same draw, the winners' 50% is <strong>split equally</strong> between them.</span></li>
+      <li><span>5</span><span><strong>First to match all 6 wins 100% of the total pot</strong> — the more entries, the bigger the prize! If two or more players complete on the same draw, the pot is <strong>split equally</strong> between them.</span></li>
       <li><span>6</span><span>Payment must be received before <strong>7:30pm on the day of each draw</strong>.<br><br>
         <strong>Bank Transfer:</strong><br>Bank: <strong>Chase Saver</strong><br>Name: <strong>Roy Caldwell</strong><br>Sort Code: <strong>60-84-07</strong><br>Account Number: <strong>99751443</strong><br><br>
         Or <strong>Cash</strong> — must be paid before the 7:30pm deadline.<br>
@@ -328,7 +306,7 @@
     <div class="stats-grid">
       <div class="stat-box"><div class="stat-num" id="settingsEntryCount">0</div><div class="stat-label">Total Entries</div></div>
       <div class="stat-box"><div class="stat-num" style="color:var(--green)" id="settingsPotTotal">£0.00</div><div class="stat-label">Total Pot</div></div>
-      <div class="stat-box"><div class="stat-num" style="color:var(--gold)" id="settingsPrize">£0.00</div><div class="stat-label">Current Prize (50%)</div></div>
+      <div class="stat-box"><div class="stat-num" style="color:var(--gold)" id="settingsPrize">£0.00</div><div class="stat-label">Current Prize (100%)</div></div>
     </div>
   </div>
 </div>
@@ -344,11 +322,10 @@ function checkPinGlobal() {
   var val = document.getElementById('pinInput').value;
   if (val === GLOBAL_PIN) {
     adminUnlocked = true;
-    document.getElementById('pinOverlay').style.display = 'none';
+    document.getElementById('loginPage').style.display = 'none';
+    document.getElementById('appContent').style.display = 'block';
     document.getElementById('viewModeBanner').style.display = 'none';
     document.querySelectorAll('.admin-only').forEach(function(el){ el.style.display=''; });
-    document.querySelectorAll('button.btn').forEach(function(b){ b.disabled=false; });
-    document.querySelectorAll('input,select').forEach(function(el){ el.disabled=false; });
     showToastGlobal('🔓 Admin mode unlocked!');
   } else {
     document.getElementById('pinError').style.display = 'block';
@@ -357,19 +334,17 @@ function checkPinGlobal() {
 }
 
 function enterViewMode() {
-  document.getElementById('pinOverlay').style.display = 'none';
+  document.getElementById('loginPage').style.display = 'none';
+  document.getElementById('appContent').style.display = 'block';
   document.getElementById('viewModeBanner').style.display = 'block';
-  // Just hide admin elements — don't disable buttons (breaks iOS touch events)
   document.querySelectorAll('.admin-only').forEach(function(el){ el.style.display='none'; });
 }
 
 function showPinOverlay() {
-  document.getElementById('pinOverlay').style.display = 'flex';
+  document.getElementById('loginPage').style.display = 'flex';
+  document.getElementById('appContent').style.display = 'none';
   document.getElementById('pinInput').value = '';
   document.getElementById('pinError').style.display = 'none';
-  // Don't auto-focus on iOS — triggers keyboard pop-up before user is ready
-  var isIos = /iphone|ipad|ipod/i.test(navigator.userAgent);
-  if(!isIos) setTimeout(function(){ document.getElementById('pinInput').focus(); }, 100);
 }
 
 function showToastGlobal(msg) {
@@ -380,7 +355,7 @@ function showToastGlobal(msg) {
 }
 
 window.addEventListener('DOMContentLoaded', function() {
-  showPinOverlay();
+  // Overlay starts visible as block — nothing to do
 });
 </script>
 
@@ -402,7 +377,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 let isAdminMode = false;
-let entries = [], draws = [], donations = [];
+let entries = [], draws = [];
 
 function setSyncBar(msg, cls) {
   const b = document.getElementById('syncBar');
@@ -412,18 +387,13 @@ function setSyncBar(msg, cls) {
 // Live listeners
 onSnapshot(collection(db, 'entries'), snap => {
   entries = snap.docs.map(d => ({id:d.id,...d.data()}));
-  renderEntries(); updatePot(); renderFunds();
+  renderEntries(); updatePot();
   setSyncBar('🟢 Live — all data synced in real time', 'synced');
 }, () => setSyncBar('❌ Connection error — check internet', 'error'));
 
 onSnapshot(query(collection(db,'draws'), orderBy('date')), snap => {
   draws = snap.docs.map(d => ({id:d.id,...d.data()}));
-  renderHistory(); renderFunds();
-});
-
-onSnapshot(collection(db,'donations'), snap => {
-  donations = snap.docs.map(d => ({id:d.id,...d.data()}));
-  renderFunds();
+  renderHistory();
 });
 
 function toast(msg) {
@@ -440,7 +410,6 @@ window._showTab = function(id,e) {
   if(e&&e.target) e.target.classList.add('active');
   if(id==='leaderboard') renderLeaderboard();
   if(id==='history') renderHistory();
-  if(id==='funds') renderFunds();
 };
 
 window.addEntry = async function() {
@@ -516,9 +485,8 @@ function renderEntries() {
 
 function updatePot() {
   const total=entries.reduce((s,e)=>s+(e.amount||2.50),0);
-  const half=total*0.5;
   document.getElementById('potBanner').textContent=
-    `💰 Pot: £${total.toFixed(2)} (${entries.length} entr${entries.length===1?'y':'ies'}) · 🏆 Prize: £${half.toFixed(2)} · ❤️ Defib Fund: £${half.toFixed(2)}`;
+    `💰 Pot: £${total.toFixed(2)} (${entries.length} entr${entries.length===1?'y':'ies'}) · 🏆 Winner Takes All!`;
 }
 
 window.processDraw = async function() {
@@ -569,7 +537,7 @@ window.processDraw = async function() {
   } catch(err){toast('❌ Error processing draw');setSyncBar('❌ Error','error');}
 };
 
-// ── Reset entries & draws only — donations/funds preserved ──
+// ── Reset entries & draws ──
 window.resetEntriesAndDraws = async function() {
   if(!confirm('This will delete ALL entries and draws.\n\n✅ Donations and funds raised will be KEPT.\n\nAre you sure?')) return;
   setSyncBar('⏳ Resetting entries & draws...','syncing');
@@ -578,7 +546,7 @@ window.resetEntriesAndDraws = async function() {
     (await getDocs(collection(db,'entries'))).forEach(d=>batch.delete(d.ref));
     (await getDocs(collection(db,'draws'))).forEach(d=>batch.delete(d.ref));
     await batch.commit();
-    toast('🗑️ Entries & draws cleared — donations preserved ❤️');
+    toast('🗑️ Entries & draws cleared');
   } catch(err){toast('❌ Error resetting');}
 };
 
@@ -692,73 +660,18 @@ function renderHistory() {
     </div>`).join('');
 }
 
-window.addDonation = async function() {
-  const name=document.getElementById('donorName').value.trim()||'Anonymous';
-  const amount=parseFloat(document.getElementById('donorAmount').value);
-  const note=document.getElementById('donorNote').value.trim();
-  if(!amount||amount<=0){toast('⚠️ Please enter a valid amount');return;}
-  try {
-    await setDoc(doc(db,'donations','don-'+Date.now()),{name,amount,note:note||'',date:new Date().toLocaleDateString('en-GB'),createdAt:Date.now()});
-    document.getElementById('donorName').value='';
-    document.getElementById('donorAmount').value='';
-    document.getElementById('donorNote').value='';
-    toast('❤️ Donation added — thank you!');
-  } catch(err){toast('❌ Error saving donation');}
-};
-
-window.removeDonation = async function(id) {
-  if(!confirm('Remove this donation?'))return;
-  await deleteDoc(doc(db,'donations',id));
-  toast('🗑️ Donation removed');
-};
-
-function renderFunds() {
-  const totalPot=entries.reduce((s,e)=>s+(e.amount||2.50),0);
-  const defibFromPot=totalPot*0.5;
-  const totalDonations=donations.reduce((s,d)=>s+d.amount,0);
-  const grandTotal=defibFromPot+totalDonations;
-  const pct=Math.min((grandTotal/2000)*100,100).toFixed(1);
-  document.getElementById('fundsStats').innerHTML=`
-    <div class="stat-box"><div class="stat-num" style="color:#e74c3c">£${grandTotal.toFixed(2)}</div><div class="stat-label">Total Raised 🎯</div></div>
-    <div class="stat-box"><div class="stat-num">£${defibFromPot.toFixed(2)}</div><div class="stat-label">From Lottery (50%)</div></div>
-    <div class="stat-box"><div class="stat-num" style="color:#2ecc71">£${totalDonations.toFixed(2)}</div><div class="stat-label">Extra Donations</div></div>
-    <div class="stat-box" style="grid-column:1/-1">
-      <div style="font-size:0.8rem;color:var(--muted);margin-bottom:8px;font-weight:600">Progress towards defibrillator (est. £2000)</div>
-      <div style="background:var(--border);border-radius:10px;height:18px;overflow:hidden;margin-bottom:6px">
-        <div style="height:100%;width:${pct}%;background:linear-gradient(90deg,#e74c3c,#f5c842);border-radius:10px;transition:width 0.5s ease"></div>
-      </div>
-      <div style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:#f5c842">${pct}% of the way there! ❤️</div>
-    </div>`;
-  document.getElementById('donationLog').innerHTML=!donations.length?'<div class="empty">No donations logged yet.</div>':
-    [...donations].sort((a,b)=>b.createdAt-a.createdAt).map(d=>`
-      <div class="history-item">
-        <div class="history-date">${d.date}</div>
-        <div style="flex:1"><strong>${d.name}</strong>${d.note?` <span style="color:var(--muted);font-size:0.78rem">— ${d.note}</span>`:''}</div>
-        <div style="color:#2ecc71;font-weight:700">£${d.amount.toFixed(2)}</div>
-        <button class="btn danger sm" onclick="removeDonation('${d.id}')" style="padding:3px 8px;font-size:0.7rem">✕</button>
-      </div>`).join('');
-  document.getElementById('drawBreakdown').innerHTML=!draws.length?'<div class="empty">No draws processed yet.</div>':
-    [...draws].reverse().map(d=>`
-      <div class="history-item">
-        <div class="history-date">${d.dateStr}</div>
-        <div style="flex:1">Numbers: ${d.numbers.join(', ')}</div>
-        <div style="color:#f5c842;font-weight:700">❤️ £${(totalPot*0.5).toFixed(2)}</div>
-      </div>`).join('');
-}
 
 function generateShareText() {
   const total=entries.reduce((s,e)=>s+(e.amount||2.50),0);
-  const prize=(total*0.5).toFixed(2);
-  const totalDonations=donations.reduce((s,d)=>s+d.amount,0);
-  const grandDefib=(total*0.5+totalDonations).toFixed(2);
-  const lastDraw=draws.length?draws[draws.length-1]:null;
+  const prize=total.toFixed(2);
+      const lastDraw=draws.length?draws[draws.length-1]:null;
   const sorted=[...entries].sort((a,b)=>b.hits.length-a.hits.length);
   const winners=entries.filter(e=>e.won);
-  let msg='🎱🎱🎱🎱🎱🎱🎱🎱🎱🎱🎱🎱\n*DEFIBRILLATOR LOTTERY BINGO*\n*📍 AT BARLOWS*\n🎱🎱🎱🎱🎱🎱🎱🎱🎱🎱🎱🎱\n\n';
+  let msg='🎱🎱🎱🎱🎱🎱🎱🎱🎱🎱🎱🎱\n*LOTTERY BINGO AT BARLOWS*\n*📍 AT BARLOWS*\n🎱🎱🎱🎱🎱🎱🎱🎱🎱🎱🎱🎱\n\n';
   if(winners.length){msg+='🏆🎉 *WE HAVE A WINNER!* 🎉🏆\n';winners.forEach(w=>msg+=`👑 *${w.name}* has matched all 6 numbers!\n`);msg+='\n';}
   if(lastDraw){msg+=`📅 *Draw ${draws.length}: ${lastDraw.dateStr}*\n🔢 Numbers: *${lastDraw.numbers.join(' • ')}*\n\n`;}
   else{msg+=`📅 *No draws yet — starting soon!*\n\n`;}
-  msg+=`💰 *POT BREAKDOWN*\n┌ Total Pot: *£${total.toFixed(2)}*\n├ 🏆 Prize Fund: *£${prize}*\n└ ❤️ Defib Fund: *£${grandDefib}*\n\n`;
+  msg+=`💰 *POT BREAKDOWN*\n🏆 Winner Takes All: *£${total.toFixed(2)}*\n\n`;
   msg+='🏆 *LEADERBOARD*\n──────────────────────\n';
   sorted.forEach((e,i)=>{
     const medals=['🥇','🥈','🥉'];
@@ -766,7 +679,7 @@ function generateShareText() {
     msg+=`${medal} *${e.name}*\n${'🟢'.repeat(e.hits.length)}${'⚪'.repeat(6-e.hits.length)} ${e.hits.length}/6`;
     msg+=e.won?' ✅ *WINNER!*\n':` — needs *${6-e.hits.length}* more\n`;
   });
-  msg+='──────────────────────\n\n📲 *WANT TO ENTER?*\n💵 Just £2.50 per entry\n📞 Call/WhatsApp: *07930 805994*\n🏦 Bank: Chase Saver — Roy Caldwell\n   Sort: 60-84-07 | Acc: 99751443\n💵 Or cash by 7:30pm before each draw\n\n❤️ *50% of every pot goes towards a*\n❤️ *life-saving defibrillator for Barlows!*\n\n🌐 *View live leaderboard & enter:*\nhttps://cogsy4.github.io/Barlows-bingo-lottery/\n🎱🎱🎱🎱🎱🎱🎱🎱🎱🎱🎱🎱';
+  msg+='──────────────────────\n\n📲 *WANT TO ENTER?*\n💵 Just £2.50 per entry\n📞 Call/WhatsApp: *07930 805994*\n🏦 Bank: Chase Saver — Roy Caldwell\n   Sort: 60-84-07 | Acc: 99751443\n💵 Or cash by 7:30pm before each draw\n\n\n\n🌐 *View live leaderboard & enter:*\nhttps://cogsy4.github.io/Barlows-bingo-lottery/\n🎱🎱🎱🎱🎱🎱🎱🎱🎱🎱🎱🎱';
   return msg;
 }
 
@@ -783,18 +696,11 @@ window.copyResults=function(){
 
 window.exportCSV=function(){
   const total=entries.reduce((s,e)=>s+(e.amount||2.50),0);
-  const defibFromPot=total*0.5;
-  const totalDonations=donations.reduce((s,d)=>s+d.amount,0);
-  const grandTotal=defibFromPot+totalDonations;
-  const rows=[['DEFIBRILLATOR LOTTERY BINGO AT BARLOWS — FULL REPORT'],['Generated:',new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'})],[],['--- SUMMARY ---'],['Total Entries',entries.length],['Total Pot','£'+total.toFixed(2)],['Prize Fund (50%)','£'+(total*0.5).toFixed(2)],['Defib Fund from Lottery (50%)','£'+defibFromPot.toFixed(2)],['Extra Donations','£'+totalDonations.toFixed(2)],['TOTAL RAISED FOR DEFIBRILLATOR','£'+grandTotal.toFixed(2)],['Total Draws Processed',draws.length],[],['--- ALL ENTRIES (Alphabetical) ---'],['Name','Numbers','Numbers Hit','Remaining','Amount Paid','Payment Method','Payment Day','Date Joined','Winner?']];
+    const rows=[['LOTTERY BINGO AT BARLOWS — FULL REPORT'],['Generated:',new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'})],[],['--- SUMMARY ---'],['Total Entries',entries.length],['Total Pot','£'+total.toFixed(2)],['Prize Fund (100%)','£'+total.toFixed(2)],['Total Draws Processed',draws.length],[],['--- ALL ENTRIES (Alphabetical) ---'],['Name','Numbers','Numbers Hit','Remaining','Amount Paid','Payment Method','Payment Day','Date Joined','Winner?']];
   // Export alphabetically
   [...entries].sort((a,b)=>a.name.localeCompare(b.name)).forEach(e=>{const rem=e.numbers.filter(n=>!e.hits.includes(n));rows.push([e.name,e.numbers.join('-'),e.hits.length>0?[...e.hits].sort((a,b)=>a-b).join('-'):'None',rem.length>0?rem.join('-'):'Complete!','£'+(e.amount||2.50).toFixed(2),e.method,e.day,e.joinDate,e.won?'YES 🏆':'No']);});
   rows.push([],[  '--- DRAW HISTORY ---'],['Draw Date','Numbers Drawn']);
   draws.forEach(d=>rows.push([d.dateStr,d.numbers.join(', ')]));
-  rows.push([],['--- DONATIONS LOG ---'],['Date','Donor','Amount','Note']);
-  donations.forEach(d=>rows.push([d.date,d.name,'£'+d.amount.toFixed(2),d.note||'']));
-  const csv=rows.map(r=>r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
-  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
   const url=URL.createObjectURL(blob);
   const a=document.createElement('a');a.href=url;a.download='Barlows_Bingo_Report_'+new Date().toISOString().split('T')[0]+'.csv';a.click();URL.revokeObjectURL(url);
   toast('📊 CSV report downloaded!');
@@ -802,16 +708,12 @@ window.exportCSV=function(){
 
 window.exportSummary=function(){
   const total=entries.reduce((s,e)=>s+(e.amount||2.50),0);
-  const defibFromPot=total*0.5;
-  const totalDonations=donations.reduce((s,d)=>s+d.amount,0);
-  const grandTotal=defibFromPot+totalDonations;
-  const pct=Math.min((grandTotal/2000)*100,100).toFixed(1);
+    const pct=Math.min((grandTotal/2000)*100,100).toFixed(1);
   const sorted=[...entries].sort((a,b)=>b.hits.length-a.hits.length);
-  let txt='🎱 DEFIBRILLATOR LOTTERY BINGO AT BARLOWS\n'+'='.repeat(40)+'\nReport: '+new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'})+'\n\n💰 FINANCIALS\n'+'-'.repeat(30)+'\nTotal Entries:         '+entries.length+'\nTotal Pot:             £'+total.toFixed(2)+'\nPrize Fund (50%):      £'+(total*0.5).toFixed(2)+'\nDefib from Lottery:    £'+defibFromPot.toFixed(2)+'\nExtra Donations:       £'+totalDonations.toFixed(2)+'\nTOTAL FOR DEFIB:       £'+grandTotal.toFixed(2)+'\nProgress to target:    '+pct+'% of £2000\n\n🏆 LEADERBOARD\n'+'-'.repeat(30)+'\n';
+  let txt='🎱 LOTTERY BINGO AT BARLOWS\n'+'='.repeat(40)+'\nReport: '+new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'})+'\n\n💰 FINANCIALS\n'+'-'.repeat(30)+'\nTotal Entries:         '+entries.length+'\nTotal Pot:             £'+total.toFixed(2)+'\nPrize (100%):          £'+total.toFixed(2)\n\n🏆 LEADERBOARD\n'+'-'.repeat(30)+'\n';
   sorted.forEach((e,i)=>{txt+=(i+1)+'. '+e.name.padEnd(20)+'█'.repeat(e.hits.length)+'░'.repeat(6-e.hits.length)+' '+e.hits.length+'/6'+(e.won?' WINNER!':'')+'\n';});
   txt+='\n📅 DRAWS PROCESSED: '+draws.length+'\n';
   draws.forEach(d=>{txt+='  '+d.dateStr+': '+d.numbers.join(', ')+'\n';});
-  if(donations.length){txt+='\n❤️ DONATIONS\n'+'-'.repeat(30)+'\n';donations.forEach(d=>{txt+=d.date+' | '+d.name+' | £'+d.amount.toFixed(2)+(d.note?' | '+d.note:'')+'\n';});}
   const blob=new Blob([txt],{type:'text/plain;charset=utf-8;'});
   const url=URL.createObjectURL(blob);
   const a=document.createElement('a');a.href=url;a.download='Barlows_Bingo_Summary_'+new Date().toISOString().split('T')[0]+'.txt';a.click();URL.revokeObjectURL(url);
@@ -819,7 +721,7 @@ window.exportSummary=function(){
 };
 
 // ── Bulk Import ────────────────────────────────────────
-const BULK_ENTRIES = [{"name":"Alan Deam","numbers":[5,6,13,22,44,47],"method":"–"},{"name":"Angela Caldwell","numbers":[1,4,15,17,24,39],"method":"Bank Transfer"},{"name":"Angie Jackson","numbers":[7,8,13,15,27,36],"method":"Bank Transfer"},{"name":"Ant Caldwell","numbers":[1,12,19,24,29,34],"method":"Bank Transfer"},{"name":"Ant Caldwell 2","numbers":[2,9,11,13,27,38],"method":"Bank Transfer"},{"name":"Ant Caldwell 3","numbers":[9,13,23,27,34,41],"method":"Bank Transfer"},{"name":"Ant Chadwick","numbers":[6,8,17,25,37,52],"method":"Cash"},{"name":"Barbara Harper","numbers":[2,11,22,25,37,58],"method":"Bank Transfer"},{"name":"Ben Power","numbers":[3,6,16,29,31,44],"method":"–"},{"name":"Beryl Formston","numbers":[2,12,22,30,41,48],"method":"Bank Transfer"},{"name":"Carol Hayes","numbers":[4,11,18,19,22,28],"method":"Bank Transfer"},{"name":"Carole Vick","numbers":[1,12,25,42,56,59],"method":"–"},{"name":"Charles Hopes","numbers":[4,12,13,22,37,38],"method":"Bank Transfer"},{"name":"Charlotte myers","numbers":[9,12,19,20,32,47],"method":"–"},{"name":"Chel Deam","numbers":[2,3,7,9,22,45],"method":"–"},{"name":"Cheryl Harris25","numbers":[1,25,29,30,31,47],"method":"–"},{"name":"Chris Carus","numbers":[4,12,17,29,40,44],"method":"–"},{"name":"Chris Hitchen","numbers":[9,22,37,44,51,58],"method":"–"},{"name":"Chris Shuker","numbers":[2,5,11,12,15,21],"method":"Cash"},{"name":"Chris Shuker 2","numbers":[9,19,29,39,49,59],"method":"Cash"},{"name":"Christine Allison","numbers":[3,9,11,19,20,40],"method":"Bank Transfer"},{"name":"Christine Allison 2","numbers":[10,13,23,49,52,53],"method":"–"},{"name":"Christine Allison 3","numbers":[7,10,20,35,42,46],"method":"–"},{"name":"Christine Carus","numbers":[4,7,11,29,43,47],"method":"–"},{"name":"Claire Ashton","numbers":[4,7,14,18,26,59],"method":"–"},{"name":"Craig Gwilliam","numbers":[7,8,14,20,32,56],"method":"Bank Transfer"},{"name":"Cynthia Farrington","numbers":[4,11,14,18,21,26],"method":"–"},{"name":"Daniel Caldwell","numbers":[7,14,15,19,22,23],"method":"Bank Transfer"},{"name":"Danielle Smith","numbers":[3,11,29,35,46,58],"method":"–"},{"name":"Darran O'neill","numbers":[9,12,29,34,45,50],"method":"Bank Transfer"},{"name":"Dave Jacks","numbers":[5,8,22,32,44,49],"method":"Bank Transfer"},{"name":"Dave Jacks 2","numbers":[2,8,10,14,18,48],"method":"–"},{"name":"Dave Jacks 3","numbers":[9,18,30,32,40,52],"method":"–"},{"name":"Diane Kennedy","numbers":[2,8,10,18,23,36],"method":"Bank Transfer"},{"name":"Diane Kennedy 2","numbers":[3,10,18,22,26,40],"method":"–"},{"name":"Don Allen","numbers":[1,16,20,23,27,45],"method":"–"},{"name":"Eddie Gleavey","numbers":[8,18,28,38,48,58],"method":"–"},{"name":"Emma Caldwell","numbers":[1,8,13,27,28,41],"method":"Bank Transfer"},{"name":"Emma Hitchen","numbers":[2,7,12,14,20,27],"method":"Bank Transfer"},{"name":"Emma Hitchen 2","numbers":[2,12,28,48,51,54],"method":"–"},{"name":"Frank Parkins","numbers":[7,9,11,17,33,48],"method":"Bank Transfer"},{"name":"Fred Abarrow","numbers":[6,9,12,16,19,21],"method":"Bank Transfer"},{"name":"Ged Shuker","numbers":[5,6,15,16,20,24],"method":"Cash"},{"name":"Ged Shuker 2","numbers":[11,22,30,33,44,55],"method":"Cash"},{"name":"Gill Mercer","numbers":[5,13,20,21,31,57],"method":"–"},{"name":"Gill Pitch","numbers":[9,15,24,38,44,48],"method":"–"},{"name":"Graham Cain","numbers":[13,17,27,30,47,56],"method":"Bank Transfer"},{"name":"Hannah Chadwick","numbers":[2,3,6,15,31,46],"method":"Cash"},{"name":"Harry Myers","numbers":[3,17,27,34,48,52],"method":"–"},{"name":"Helen Colford","numbers":[7,10,14,31,43,59],"method":"Bank Transfer"},{"name":"Helen Colford 2","numbers":[3,5,23,33,44,56],"method":"Bank Transfer"},{"name":"Helen Colford 3","numbers":[9,15,22,37,47,51],"method":"Bank Transfer"},{"name":"Helen Colford 4","numbers":[2,9,35,41,55,58],"method":"Bank Transfer"},{"name":"Helen Forbes","numbers":[8,10,26,39,42,48],"method":"–"},{"name":"Helen Johnson","numbers":[2,7,11,13,18,29],"method":"–"},{"name":"Ian Abram","numbers":[4,7,10,13,17,49],"method":"Bank Transfer"},{"name":"Ian Laing","numbers":[1,7,19,25,47,59],"method":"–"},{"name":"Ian Mercer","numbers":[15,16,19,43,55,59],"method":"–"},{"name":"Ian Oliver","numbers":[3,7,19,23,33,45],"method":"–"},{"name":"Ian/ Clare O sullivan","numbers":[5,18,29,40,52,55],"method":"Bank Transfer"},{"name":"Isla Vowles","numbers":[3,9,17,20,30,40],"method":"–"},{"name":"Isobelle Colford","numbers":[3,4,6,16,43,56],"method":"–"},{"name":"Jack Cotterill","numbers":[6,22,25,29,46,55],"method":"–"},{"name":"Jack Cotterill 2","numbers":[7,29,31,41,51,59],"method":"–"},{"name":"Jackie Coxell","numbers":[4,9,11,20,33,42],"method":"Bank Transfer"},{"name":"Jackie Gleavey","numbers":[7,9,21,36,42,46],"method":"–"},{"name":"Jane O sullivan ❤️","numbers":[1,12,24,36,48,59],"method":"Bank Transfer"},{"name":"Janice Myers","numbers":[4,12,14,26,28,48],"method":"–"},{"name":"Jay Worrall","numbers":[15,29,47,49,51,52],"method":"Bank Transfer"},{"name":"Jean Parkins","numbers":[6,7,10,14,15,23],"method":"Bank Transfer"},{"name":"Jean Soderberg","numbers":[3,13,18,21,36,44],"method":"–"},{"name":"Jeff Cox","numbers":[1,6,7,13,15,29],"method":"Bank Transfer"},{"name":"Jennie Nickson","numbers":[1,2,8,22,27,45],"method":"–"},{"name":"Jenny Ellis","numbers":[3,11,17,26,34,49],"method":"–"},{"name":"Jessica Cox","numbers":[1,11,15,17,54,59],"method":"Bank Transfer"},{"name":"Jessica Jacks","numbers":[2,8,16,18,22,28],"method":"–"},{"name":"Jimmy Ashton","numbers":[2,10,20,26,28,39],"method":"Bank Transfer"},{"name":"Jimmy Ashton 2","numbers":[13,14,16,29,36,37],"method":"–"},{"name":"Joan Reilly","numbers":[3,7,8,15,24,26],"method":"–"},{"name":"Joanne Duffy","numbers":[7,12,13,21,29,48],"method":"–"},{"name":"Joanne Ludden","numbers":[1,11,13,18,24,55],"method":"–"},{"name":"John Caldwell","numbers":[7,15,17,33,43,47],"method":"Bank Transfer"},{"name":"John Williamson","numbers":[17,37,38,40,49,50],"method":"–"},{"name":"John Williamson 2","numbers":[21,23,32,49,55,56],"method":"–"},{"name":"Joseph Gwilliam","numbers":[5,10,20,36,42,51],"method":"Bank Transfer"},{"name":"Joshua Myers","numbers":[1,15,16,33,45,59],"method":"–"},{"name":"Julia Cox","numbers":[1,4,5,11,13,29],"method":"Bank Transfer"},{"name":"Julie Caldwell","numbers":[3,5,11,23,29,44],"method":"Bank Transfer"},{"name":"Julie Caldwell 2","numbers":[13,18,24,52,54,55],"method":"–"},{"name":"Karen Abram","numbers":[8,21,22,24,25,41],"method":"Bank Transfer"},{"name":"Karen Chapman","numbers":[8,11,27,39,42,57],"method":"Bank Transfer"},{"name":"Kate Shearer","numbers":[11,19,38,40,41,57],"method":"Bank Transfer"},{"name":"Katie Worrall","numbers":[2,4,5,6,34,44],"method":"–"},{"name":"Keita Webb","numbers":[9,10,11,17,22,49],"method":"–"},{"name":"Keith Formston","numbers":[7,15,19,23,24,38],"method":"Bank Transfer"},{"name":"Kelly Dunham","numbers":[13,18,23,25,47,53],"method":"–"},{"name":"Kelly Dunham.","numbers":[10,19,21,40,51,52],"method":"Bank Transfer"},{"name":"Ken Guy","numbers":[1,9,14,30,45,51],"method":"–"},{"name":"Kids O sullivan","numbers":[2,5,7,11,19,50],"method":"Bank Transfer"},{"name":"Lilly Nickson","numbers":[4,8,19,27,42,56],"method":"Bank Transfer"},{"name":"Linda Hodge","numbers":[23,25,30,33,38,40],"method":"Bank Transfer"},{"name":"Lisa Fryer","numbers":[2,9,18,29,32,44],"method":"–"},{"name":"Lisa Fryer 2","numbers":[1,9,21,29,37,44],"method":"–"},{"name":"Logan Shearer","numbers":[1,6,26,31,44,59],"method":"–"},{"name":"Lynette Shrewsbury-Gee","numbers":[3,4,13,19,21,30],"method":"Bank Transfer"},{"name":"Lynn Hull","numbers":[1,2,30,37,52,59],"method":"–"},{"name":"Lynsey Worrall","numbers":[7,13,14,28,53,59],"method":"Bank Transfer"},{"name":"Mandy roberts","numbers":[2,14,35,38,43,53],"method":"Bank Transfer"},{"name":"Maria williamson","numbers":[5,13,17,29,50,59],"method":"–"},{"name":"Maria Williamson 2","numbers":[18,20,30,39,41,54],"method":"–"},{"name":"Marie Guy","numbers":[8,10,13,27,44,47],"method":"–"},{"name":"Mark Hayes","numbers":[9,12,22,28,36,44],"method":"Bank Transfer"},{"name":"Mike Dunham","numbers":[4,13,14,28,49,53],"method":"–"},{"name":"Mike Dunham.","numbers":[4,21,25,37,53,55],"method":"Bank Transfer"},{"name":"Mike Roberts","numbers":[8,12,22,28,35,46],"method":"–"},{"name":"Morgan Colford","numbers":[11,12,22,49,52,59],"method":"–"},{"name":"Natham Jacks","numbers":[6,8,20,27,44,48],"method":"–"},{"name":"Oliver Hitchen","numbers":[1,3,32,35,56,58],"method":"–"},{"name":"Paddy O sullivan","numbers":[2,5,11,16,18,23],"method":"Bank Transfer"},{"name":"Pam Caldwell","numbers":[6,12,14,26,32,43],"method":"Bank Transfer"},{"name":"Pam Caldwell 2","numbers":[1,3,32,45,49,52],"method":"Bank Transfer"},{"name":"Paul Lloyd","numbers":[1,8,9,10,18,20],"method":"Bank Transfer"},{"name":"Paul Lloyd 2","numbers":[2,5,19,25,35,58],"method":"Bank Transfer"},{"name":"Paul Myers","numbers":[6,21,27,29,38,44],"method":"–"},{"name":"Paula Boyd","numbers":[3,9,11,17,23,31],"method":"–"},{"name":"Paula Cox","numbers":[7,13,17,24,43,49],"method":"Bank Transfer"},{"name":"Pauline Hughes","numbers":[2,6,11,25,26,31],"method":"–"},{"name":"Pauline Hughes 2","numbers":[15,26,27,28,29,30],"method":"–"},{"name":"Peter Caldwell","numbers":[19,23,37,43,50,55],"method":"Bank Transfer"},{"name":"Peter Caldwell 2","numbers":[6,12,18,22,30,44],"method":"Bank Transfer"},{"name":"Poppy colford","numbers":[2,12,20,35,49,59],"method":"–"},{"name":"Ray Soderberg","numbers":[6,8,14,25,26,43],"method":"Bank Transfer"},{"name":"Rob Cully","numbers":[33,35,37,39,41,43],"method":"Bank Transfer"},{"name":"Ronnie Cox","numbers":[5,11,15,19,31,32],"method":"Bank Transfer"},{"name":"Ronnie Greylish","numbers":[1,3,7,18,21,47],"method":"Bank Transfer"},{"name":"Roy Caldwell","numbers":[2,5,7,9,22,29],"method":"Bank Transfer"},{"name":"Roy Caldwell 2","numbers":[1,2,10,22,27,57],"method":"Bank Transfer"},{"name":"Roy Caldwell 3","numbers":[2,19,31,41,53,55],"method":"–"},{"name":"Roy Caldwell 4","numbers":[6,19,42,43,48,55],"method":"–"},{"name":"Sandie Cain","numbers":[8,18,19,23,30,53],"method":"Bank Transfer"},{"name":"Sarah Woodward","numbers":[3,9,17,25,26,34],"method":"–"},{"name":"Sarah-Jane-Jacks","numbers":[2,9,11,25,28,35],"method":"Bank Transfer"},{"name":"Sarah-Jane-Jacks 2","numbers":[2,3,8,29,32,57],"method":"Bank Transfer"},{"name":"Sarah-Jane-Jacks 3","numbers":[2,5,28,39,53,55],"method":"Bank Transfer"},{"name":"Savannah Webb","numbers":[11,19,22,39,45,54],"method":"Bank Transfer"},{"name":"Sharon Nicholas","numbers":[1,14,20,27,28,36],"method":"Bank Transfer"},{"name":"Sharon Nicholas SN","numbers":[3,4,27,28,48,49],"method":"–"},{"name":"Shaun Chapman","numbers":[2,11,13,22,42,54],"method":"Bank Transfer"},{"name":"Sheila Fryer","numbers":[1,10,12,14,43,48],"method":"–"},{"name":"Sheila Fryer 2","numbers":[4,13,32,34,38,43],"method":"–"},{"name":"Shelagh cary James","numbers":[22,26,35,39,46,49],"method":"–"},{"name":"Shelagh Wilson","numbers":[4,9,11,13,27,31],"method":"Bank Transfer"},{"name":"Siôn James Thomas","numbers":[6,16,17,40,41,47],"method":"Cash"},{"name":"Siôn Thomas","numbers":[1,20,45,53,56,58],"method":"Bank Transfer"},{"name":"Ste Jackson","numbers":[1,5,9,21,25,31],"method":"Bank Transfer"},{"name":"Ste nickson","numbers":[2,7,14,17,29,30],"method":"Bank Transfer"},{"name":"Ste Vowles","numbers":[1,6,8,11,27,30],"method":"Bank Transfer"},{"name":"Ste Vowles 2","numbers":[3,23,31,44,49,54],"method":"Bank Transfer"},{"name":"Ste Vowles 3","numbers":[9,19,25,37,42,49],"method":"Bank Transfer"},{"name":"Ste Vowles 4","numbers":[3,7,11,17,21,23],"method":"Bank Transfer"},{"name":"Stephen Cox","numbers":[8,12,16,32,48,55],"method":"Bank Transfer"},{"name":"Stephen Shearer","numbers":[2,7,27,33,45,55],"method":"Bank Transfer"},{"name":"Steve Buckley","numbers":[3,6,9,49,53,56],"method":"Bank Transfer"},{"name":"Sue Buckley","numbers":[8,10,22,48,50,56],"method":"Bank Transfer"},{"name":"Sue Buckley 2","numbers":[11,14,20,31,32,43],"method":"–"},{"name":"Theo Hitchen","numbers":[1,16,21,27,51,59],"method":"–"},{"name":"Tom Hughes","numbers":[4,11,14,15,26,29],"method":"–"},{"name":"Tom Hughes 2","numbers":[34,35,36,37,38,39],"method":"–"},{"name":"Tracy Eden","numbers":[2,12,20,41,45,56],"method":"–"},{"name":"Tracy Eden 2","numbers":[4,11,40,45,47,54],"method":"–"},{"name":"Tracy Leacy","numbers":[8,10,21,37,52,59],"method":"–"},{"name":"Vernon Hodge","numbers":[3,9,17,39,41,48],"method":"Bank Transfer"},{"name":"Wendy Branigan","numbers":[1,2,10,11,19,30],"method":"Bank Transfer"},{"name":"Wendy brannigan","numbers":[12,14,27,30,32,42],"method":"–"},{"name":"Wendy Gwilliam","numbers":[7,13,27,38,42,58],"method":"Bank Transfer"},{"name":"Wendy Gwilliam 2","numbers":[4,6,11,22,26,40],"method":"Bank Transfer"},{"name":"Yvonne Keouski","numbers":[6,8,18,21,29,30],"method":"Bank Transfer"}];
+const BULK_ENTRIES = [{"name":"Alan Deam","numbers":[5,6,13,22,44,47],"method":"Bank Transfer"},{"name":"Ang Reeves","numbers":[9,10,21,36,49,56],"method":"Bank Transfer"},{"name":"Angela Caldwell","numbers":[1,4,15,17,24,39],"method":"Bank Transfer"},{"name":"Angie Jackson","numbers":[7,8,13,15,27,36],"method":"Bank Transfer"},{"name":"Ant Chadwick","numbers":[6,8,17,25,37,52],"method":"Bank Transfer"},{"name":"Antony Caldwell","numbers":[1,12,19,24,29,34],"method":"Bank Transfer"},{"name":"Antony Caldwell 2","numbers":[2,9,11,13,27,38],"method":"Bank Transfer"},{"name":"Antony Caldwell 3","numbers":[9,13,23,27,34,41],"method":"Bank Transfer"},{"name":"Barbara Harper","numbers":[2,11,22,25,37,58],"method":"Bank Transfer"},{"name":"Barbera Harper 2","numbers":[5,7,13,36,45,51],"method":"Bank Transfer"},{"name":"Ben Power","numbers":[3,6,16,29,31,44],"method":"Bank Transfer"},{"name":"Beryl Allen","numbers":[8,23,28,42,45,49],"method":"Bank Transfer"},{"name":"Beryl Formston","numbers":[2,12,22,30,41,48],"method":"Bank Transfer"},{"name":"Callum Bennett","numbers":[4,7,15,23,28,43],"method":"Bank Transfer"},{"name":"Carol Hayes","numbers":[4,11,18,19,22,28],"method":"Bank Transfer"},{"name":"Charles Hopes","numbers":[4,12,13,22,37,38],"method":"Bank Transfer"},{"name":"Charlotte Myers","numbers":[9,12,19,20,32,47],"method":"Bank Transfer"},{"name":"Chell Deam","numbers":[2,3,7,9,22,45],"method":"Bank Transfer"},{"name":"Cheryl Harris","numbers":[1,25,29,30,31,47],"method":"Bank Transfer"},{"name":"Chris Carus","numbers":[4,12,17,29,43,47],"method":"Bank Transfer"},{"name":"Chris Shuker","numbers":[2,5,11,12,15,21],"method":"Bank Transfer"},{"name":"Chris Shuker 2","numbers":[9,19,29,39,49,59],"method":"Bank Transfer"},{"name":"Christine Allison","numbers":[3,9,11,19,20,40],"method":"Bank Transfer"},{"name":"Christine Allison 2","numbers":[7,10,20,35,42,46],"method":"Bank Transfer"},{"name":"Christine Allison 3","numbers":[10,13,23,49,52,53],"method":"Bank Transfer"},{"name":"Christine Carus","numbers":[4,7,11,29,43,47],"method":"Bank Transfer"},{"name":"Claire Ashton","numbers":[4,7,14,18,26,59],"method":"Bank Transfer"},{"name":"Craig Gwilliam","numbers":[7,8,14,20,32,56],"method":"Bank Transfer"},{"name":"Cynthia Farrington","numbers":[4,11,14,18,21,26],"method":"Bank Transfer"},{"name":"Daniel Caldwell","numbers":[7,14,15,19,22,23],"method":"Bank Transfer"},{"name":"Danielle Smith","numbers":[3,11,29,35,46,58],"method":"Bank Transfer"},{"name":"Darran O'Neill","numbers":[7,11,20,24,46,54],"method":"Bank Transfer"},{"name":"Darran O'Neill 2","numbers":[9,12,29,34,45,50],"method":"Bank Transfer"},{"name":"Dave Jacks","numbers":[5,8,22,32,44,49],"method":"Bank Transfer"},{"name":"Dave Jacks 2","numbers":[2,8,10,14,18,48],"method":"Bank Transfer"},{"name":"Dave Jacks 3","numbers":[9,18,30,32,40,52],"method":"Bank Transfer"},{"name":"Dave Mac","numbers":[1,9,17,21,27,29],"method":"Bank Transfer"},{"name":"Dave Roberts","numbers":[2,7,15,21,28,35],"method":"Bank Transfer"},{"name":"Deb Mac","numbers":[5,18,25,34,40,46],"method":"Bank Transfer"},{"name":"Dennis Renshaw","numbers":[29,47,52,55,57,58],"method":"Bank Transfer"},{"name":"Diane Kennedy","numbers":[2,8,10,18,23,36],"method":"Bank Transfer"},{"name":"Diane Kennedy 2","numbers":[3,10,18,22,26,49],"method":"Bank Transfer"},{"name":"Don Allen","numbers":[1,16,20,23,27,45],"method":"Bank Transfer"},{"name":"Donna Morgan","numbers":[12,18,20,23,42,57],"method":"Bank Transfer"},{"name":"Eddie Gleavey","numbers":[8,18,28,38,48,59],"method":"Bank Transfer"},{"name":"Ellie Roberts","numbers":[15,21,28,34,44,52],"method":"Bank Transfer"},{"name":"Emma Caldwell","numbers":[1,8,13,27,28,47],"method":"Bank Transfer"},{"name":"Erica Burney","numbers":[3,13,19,30,33,49],"method":"Bank Transfer"},{"name":"Euan Roberts","numbers":[5,15,24,34,42,55],"method":"Bank Transfer"},{"name":"Frank Parkins","numbers":[7,9,11,17,33,48],"method":"Bank Transfer"},{"name":"Fred A Barrow","numbers":[6,9,12,16,19,21],"method":"Bank Transfer"},{"name":"Ged Shuker","numbers":[5,6,15,16,20,24],"method":"Bank Transfer"},{"name":"Ged Shuker 2","numbers":[11,22,30,33,44,55],"method":"Bank Transfer"},{"name":"Georgina Leonard","numbers":[5,11,15,25,43,56],"method":"Bank Transfer"},{"name":"Georgina Leonard 2","numbers":[7,13,27,30,40,59],"method":"Bank Transfer"},{"name":"Gill Mercer","numbers":[5,13,20,21,31,57],"method":"Bank Transfer"},{"name":"Gill Pitch","numbers":[9,15,24,38,44,48],"method":"Bank Transfer"},{"name":"Graham Cain","numbers":[15,21,30,37,45,51],"method":"Bank Transfer"},{"name":"Hannah Chadwick","numbers":[2,3,6,15,31,46],"method":"Bank Transfer"},{"name":"Hannah Scott","numbers":[7,9,29,31,38,56],"method":"Bank Transfer"},{"name":"Hannah Scott 2","numbers":[14,18,36,46,48,58],"method":"Bank Transfer"},{"name":"Harry Myers","numbers":[3,17,27,34,48,52],"method":"Bank Transfer"},{"name":"Harvey Smith","numbers":[6,21,27,31,49,55],"method":"Bank Transfer"},{"name":"Harvey Smith 2","numbers":[1,9,26,30,43,59],"method":"Bank Transfer"},{"name":"Helen Colford","numbers":[7,10,14,31,43,59],"method":"Bank Transfer"},{"name":"Helen Colford 2","numbers":[3,5,23,33,44,56],"method":"Bank Transfer"},{"name":"Helen Colford 3","numbers":[9,15,22,37,47,51],"method":"Bank Transfer"},{"name":"Helen Colford 4","numbers":[2,9,35,41,55,58],"method":"Bank Transfer"},{"name":"Helen Forbes","numbers":[8,10,26,39,42,48],"method":"Bank Transfer"},{"name":"Helen Johnson","numbers":[2,7,11,13,18,29],"method":"Bank Transfer"},{"name":"Ian / Claire O'Sullivan","numbers":[5,18,29,40,52,55],"method":"Bank Transfer"},{"name":"Ian Abram","numbers":[4,7,10,13,17,49],"method":"Bank Transfer"},{"name":"Ian Laing","numbers":[1,7,19,25,47,59],"method":"Bank Transfer"},{"name":"Ian Mercer","numbers":[15,16,19,43,55,59],"method":"Bank Transfer"},{"name":"Ian Oliver","numbers":[3,7,19,23,33,45],"method":"Bank Transfer"},{"name":"Isla Vowles","numbers":[3,9,17,20,30,40],"method":"Bank Transfer"},{"name":"Isobelle Colford","numbers":[3,4,6,16,43,56],"method":"Bank Transfer"},{"name":"Jack Cotterill","numbers":[6,22,25,39,46,55],"method":"Bank Transfer"},{"name":"Jack Cotterill 2","numbers":[7,29,31,41,51,59],"method":"Bank Transfer"},{"name":"Jackie Coxell","numbers":[4,9,11,20,33,42],"method":"Bank Transfer"},{"name":"Jackie Gleavey","numbers":[7,9,21,36,42,46],"method":"Bank Transfer"},{"name":"Jackie Renshaw","numbers":[8,18,24,37,41,59],"method":"Bank Transfer"},{"name":"James Ombler","numbers":[1,5,7,21,28,34],"method":"Bank Transfer"},{"name":"James Ombler 2","numbers":[9,11,17,22,47,57],"method":"Bank Transfer"},{"name":"Jane O'Sullivan","numbers":[1,12,24,36,48,59],"method":"Bank Transfer"},{"name":"Janice Myers","numbers":[4,12,14,26,28,48],"method":"Bank Transfer"},{"name":"Jay Worrall","numbers":[15,29,47,49,51,52],"method":"Bank Transfer"},{"name":"Jean Parkins","numbers":[6,7,10,14,15,23],"method":"Bank Transfer"},{"name":"Jean Soderberg","numbers":[3,13,18,21,36,44],"method":"Bank Transfer"},{"name":"Jeff Cox","numbers":[1,6,7,13,15,29],"method":"Bank Transfer"},{"name":"Jenny Ellis","numbers":[3,11,17,26,34,49],"method":"Bank Transfer"},{"name":"Jenny Nickson","numbers":[1,2,8,22,27,45],"method":"Bank Transfer"},{"name":"Jessica Cox","numbers":[1,11,15,17,54,59],"method":"Bank Transfer"},{"name":"Jessica Jacks","numbers":[2,8,16,18,22,28],"method":"Bank Transfer"},{"name":"Jimmy Ashton","numbers":[2,10,20,36,42,51],"method":"Bank Transfer"},{"name":"Jimmy Ashton 2","numbers":[13,14,16,29,36,37],"method":"Bank Transfer"},{"name":"Jimmy Worrall","numbers":[6,13,29,44,49,56],"method":"Bank Transfer"},{"name":"Joan Reilly","numbers":[3,7,8,15,24,26],"method":"Bank Transfer"},{"name":"Joanne Duffy","numbers":[7,12,13,21,29,48],"method":"Bank Transfer"},{"name":"Joanne Ludden","numbers":[1,11,13,18,24,55],"method":"Bank Transfer"},{"name":"John Barker","numbers":[2,20,31,33,49,53],"method":"Bank Transfer"},{"name":"John Caldwell","numbers":[7,15,17,33,43,47],"method":"Bank Transfer"},{"name":"John Nelson","numbers":[4,5,15,20,32,36],"method":"Bank Transfer"},{"name":"John Williamson","numbers":[21,23,32,49,55,56],"method":"Bank Transfer"},{"name":"John Williamson 2","numbers":[17,37,38,40,49,50],"method":"Bank Transfer"},{"name":"Jordan Hopes","numbers":[4,8,11,20,37,39],"method":"Bank Transfer"},{"name":"Jordan Hopes 2","numbers":[7,27,34,42,48,55],"method":"Bank Transfer"},{"name":"Joseph Gwilliam","numbers":[5,19,20,36,42,51],"method":"Bank Transfer"},{"name":"Joshua Myers","numbers":[1,15,16,33,45,59],"method":"Bank Transfer"},{"name":"Julia Cox","numbers":[1,4,5,11,13,29],"method":"Bank Transfer"},{"name":"Julie Caldwell","numbers":[3,5,11,23,29,44],"method":"Bank Transfer"},{"name":"Julie Caldwell 2","numbers":[13,18,24,52,54,55],"method":"Bank Transfer"},{"name":"Karen Abram","numbers":[8,21,22,24,25,41],"method":"Bank Transfer"},{"name":"Karen Chapman","numbers":[8,11,27,39,42,54],"method":"Bank Transfer"},{"name":"Kate Shearer","numbers":[11,19,38,40,41,57],"method":"Bank Transfer"},{"name":"Katie Worrall","numbers":[2,4,5,6,34,44],"method":"Bank Transfer"},{"name":"Keita Webb","numbers":[9,10,11,17,22,49],"method":"Bank Transfer"},{"name":"Keith Formston","numbers":[7,15,19,23,24,38],"method":"Bank Transfer"},{"name":"Kelly Dunham","numbers":[9,10,21,40,51,52],"method":"Bank Transfer"},{"name":"Ken Guy","numbers":[1,9,14,30,45,51],"method":"Bank Transfer"},{"name":"Kids O'Sullivan","numbers":[2,5,7,11,19,50],"method":"Bank Transfer"},{"name":"Lee Jones","numbers":[3,12,18,32,35,49],"method":"Bank Transfer"},{"name":"Liam Richardson","numbers":[9,10,41,49,50,54],"method":"Bank Transfer"},{"name":"Lily Nickson","numbers":[4,8,19,27,42,56],"method":"Bank Transfer"},{"name":"Linda Duff","numbers":[5,12,25,39,54,55],"method":"Bank Transfer"},{"name":"Linda Duff 2","numbers":[4,10,25,27,32,58],"method":"Bank Transfer"},{"name":"Logan Shearer","numbers":[1,6,26,31,44,59],"method":"Bank Transfer"},{"name":"Lynette Shrewsbury-Gee","numbers":[3,4,13,19,21,30],"method":"Bank Transfer"},{"name":"Lynn Hodge","numbers":[23,25,30,33,38,40],"method":"Bank Transfer"},{"name":"Lynn Hull","numbers":[1,18,21,39,53,55],"method":"Bank Transfer"},{"name":"Lynsey Worrall","numbers":[7,13,14,28,53,59],"method":"Bank Transfer"},{"name":"Mandy Roberts","numbers":[2,4,7,11,26,44],"method":"Bank Transfer"},{"name":"Maria Williamson","numbers":[5,13,17,29,50,59],"method":"Bank Transfer"},{"name":"Maria Williamson 2","numbers":[18,20,29,39,41,54],"method":"Bank Transfer"},{"name":"Marie Guy","numbers":[8,10,13,27,44,47],"method":"Bank Transfer"},{"name":"Mark Hayes","numbers":[9,12,22,28,36,44],"method":"Bank Transfer"},{"name":"Maureen Renshaw","numbers":[8,13,34,36,48,54],"method":"Bank Transfer"},{"name":"Maxine","numbers":[17,30,32,38,40,48],"method":"Bank Transfer"},{"name":"Maxine 2","numbers":[10,16,17,29,44,47],"method":"Bank Transfer"},{"name":"Mike Dunham","numbers":[4,21,25,37,53,55],"method":"Bank Transfer"},{"name":"Mike Roberts","numbers":[8,12,22,28,35,46],"method":"Bank Transfer"},{"name":"Morgan Colford","numbers":[11,12,22,49,52,59],"method":"Bank Transfer"},{"name":"Nathem Jacks","numbers":[6,8,20,27,44,48],"method":"Bank Transfer"},{"name":"Norman James","numbers":[3,8,31,32,33,53],"method":"Bank Transfer"},{"name":"Oliver Hitchen","numbers":[1,3,32,35,56,58],"method":"Bank Transfer"},{"name":"Paddy O'Sullivan","numbers":[2,5,11,16,18,23],"method":"Bank Transfer"},{"name":"Pam Caldwell","numbers":[6,12,14,26,32,43],"method":"Bank Transfer"},{"name":"Pam Caldwell 2","numbers":[1,3,32,45,49,52],"method":"Bank Transfer"},{"name":"Paul Lloyd","numbers":[1,8,9,10,18,20],"method":"Bank Transfer"},{"name":"Paul Lloyd 2","numbers":[2,5,19,25,35,58],"method":"Bank Transfer"},{"name":"Paul Myers","numbers":[6,21,27,29,38,44],"method":"Bank Transfer"},{"name":"Paul Reeves","numbers":[23,34,51,53,56,59],"method":"Bank Transfer"},{"name":"Paula Cox","numbers":[7,13,17,24,43,49],"method":"Bank Transfer"},{"name":"Pauline Hughes","numbers":[2,6,11,25,26,31],"method":"Bank Transfer"},{"name":"Pauline Hughes 2","numbers":[16,26,27,28,29,30],"method":"Bank Transfer"},{"name":"Peter Caldwell","numbers":[19,23,37,43,50,55],"method":"Bank Transfer"},{"name":"Peter Caldwell 2","numbers":[6,12,18,22,30,44],"method":"Bank Transfer"},{"name":"Poppy Colford","numbers":[2,12,20,35,49,59],"method":"Bank Transfer"},{"name":"Ray Soderberg","numbers":[6,8,14,25,26,43],"method":"Bank Transfer"},{"name":"Rob Cully","numbers":[8,11,21,26,48,55],"method":"Bank Transfer"},{"name":"Ronnie Cox","numbers":[5,11,15,19,31,32],"method":"Bank Transfer"},{"name":"Ronnie Greylish","numbers":[1,3,7,18,21,47],"method":"Bank Transfer"},{"name":"Roy Caldwell","numbers":[2,5,7,9,22,29],"method":"Bank Transfer"},{"name":"Roy Caldwell 2","numbers":[1,8,10,22,27,57],"method":"Bank Transfer"},{"name":"Roy Caldwell 3","numbers":[2,19,31,41,53,55],"method":"Bank Transfer"},{"name":"Roy Caldwell 4","numbers":[6,19,42,43,48,55],"method":"Bank Transfer"},{"name":"Sam Reeds","numbers":[10,29,30,40,50,55],"method":"Bank Transfer"},{"name":"Sandie Cain","numbers":[10,18,30,35,41,44],"method":"Bank Transfer"},{"name":"Sarah Jane Jacks","numbers":[2,9,11,25,28,35],"method":"Bank Transfer"},{"name":"Sarah Jane Jacks 2","numbers":[2,3,8,29,32,57],"method":"Bank Transfer"},{"name":"Sarah Jane Jacks 3","numbers":[2,5,28,39,53,55],"method":"Bank Transfer"},{"name":"Sarah Woodward","numbers":[3,9,17,25,26,34],"method":"Bank Transfer"},{"name":"Savannah Webb","numbers":[11,19,22,39,45,54],"method":"Bank Transfer"},{"name":"Sharon Batty","numbers":[4,7,10,13,16,31],"method":"Bank Transfer"},{"name":"Sharon Nicholas","numbers":[1,14,20,27,28,36],"method":"Bank Transfer"},{"name":"Sharon Nicholas SN","numbers":[3,4,27,28,48,49],"method":"Bank Transfer"},{"name":"Shaun Chapman","numbers":[2,11,13,22,42,54],"method":"Bank Transfer"},{"name":"Shelagh Wilson","numbers":[4,9,11,13,27,31],"method":"Bank Transfer"},{"name":"Sion Thomas","numbers":[1,20,45,53,56,58],"method":"Bank Transfer"},{"name":"Sion Thomas 2","numbers":[6,16,17,40,41,47],"method":"Bank Transfer"},{"name":"Ste Buckley","numbers":[3,6,9,49,53,56],"method":"Bank Transfer"},{"name":"Ste Jackson","numbers":[1,5,9,21,25,31],"method":"Bank Transfer"},{"name":"Ste Morgan","numbers":[26,30,40,49,55,59],"method":"Bank Transfer"},{"name":"Ste Nickson","numbers":[2,7,14,17,29,30],"method":"Bank Transfer"},{"name":"Ste Vowles","numbers":[1,6,8,11,27,30],"method":"Bank Transfer"},{"name":"Ste Vowles 2","numbers":[3,23,31,44,49,54],"method":"Bank Transfer"},{"name":"Ste Vowles 3","numbers":[9,19,25,37,42,49],"method":"Bank Transfer"},{"name":"Ste Vowles 4","numbers":[3,7,11,17,21,23],"method":"Bank Transfer"},{"name":"Stephen Cox","numbers":[8,12,16,32,48,55],"method":"Bank Transfer"},{"name":"Stephen Shearer","numbers":[2,7,27,33,45,55],"method":"Bank Transfer"},{"name":"Steve Renshaw","numbers":[3,19,26,34,48,53],"method":"Bank Transfer"},{"name":"Sue Buckley","numbers":[8,10,22,48,50,56],"method":"Bank Transfer"},{"name":"Sue Buckley 2","numbers":[11,14,20,31,32,43],"method":"Bank Transfer"},{"name":"Taylor Lock","numbers":[15,25,33,35,44,46],"method":"Bank Transfer"},{"name":"Theo Hitchen","numbers":[1,16,21,27,51,59],"method":"Bank Transfer"},{"name":"Tom Hughes","numbers":[4,11,14,15,26,29],"method":"Bank Transfer"},{"name":"Tom Hughes 2","numbers":[34,35,36,37,38,39],"method":"Bank Transfer"},{"name":"Tracy Eden","numbers":[2,12,20,41,45,56],"method":"Bank Transfer"},{"name":"Tracy Eden 2","numbers":[3,5,7,11,34,37],"method":"Bank Transfer"},{"name":"Tracy Leacy","numbers":[8,10,21,37,52,59],"method":"Bank Transfer"},{"name":"Vernon Hodge","numbers":[3,9,17,39,41,48],"method":"Bank Transfer"},{"name":"Wendy Branigan","numbers":[1,2,10,11,19,30],"method":"Bank Transfer"},{"name":"Wendy Branigan 2","numbers":[12,14,27,30,32,42],"method":"Bank Transfer"},{"name":"Wendy Gwilliam","numbers":[7,13,27,38,42,58],"method":"Bank Transfer"},{"name":"Wendy Gwilliam 2","numbers":[4,6,11,22,26,40],"method":"Bank Transfer"},{"name":"Yvonne Keouski","numbers":[2,7,15,22,27,31],"method":"Bank Transfer"}];
 
 window._bulkImport = async function() {
   if(!confirm('Import all 177 entries for the new competition?\n\n✅ Donations and funds raised will be kept.\n\nThis will first clear existing entries and draws, then import fresh.')) return;
@@ -828,7 +730,7 @@ window._bulkImport = async function() {
   btn.textContent = '⏳ Clearing old entries...';
   setSyncBar('⏳ Clearing old data...','syncing');
   try {
-    // Clear entries and draws only (keep donations)
+    // Clear entries and draws
     const clearBatch = writeBatch(db);
     (await getDocs(collection(db,'entries'))).forEach(d=>clearBatch.delete(d.ref));
     (await getDocs(collection(db,'draws'))).forEach(d=>clearBatch.delete(d.ref));
@@ -869,7 +771,7 @@ window._bulkImport = async function() {
     toast('❌ Import failed: ' + err.message);
     setSyncBar('❌ Import failed — try again','error');
     btn.disabled = false;
-    btn.textContent = '📥 Import All 177 Entries for New Competition';
+    btn.textContent = '📥 Import All 206 Entries for New Competition';
   }
 };
 
@@ -903,7 +805,7 @@ function updateEntryStatus() {
   if(document.getElementById('settingsEntryCount')) {
     document.getElementById('settingsEntryCount').textContent = entries.length;
     document.getElementById('settingsPotTotal').textContent = '£' + total.toFixed(2);
-    document.getElementById('settingsPrize').textContent = '£' + (total*0.5).toFixed(2);
+    document.getElementById('settingsPrize').textContent = '£' + total.toFixed(2);
   }
 }
 
@@ -994,8 +896,6 @@ function shareResults(){ window.shareResults && window.shareResults(); }
 function copyResults(){ window.copyResults && window.copyResults(); }
 function exportCSV(){ window.exportCSV && window.exportCSV(); }
 function exportSummary(){ window.exportSummary && window.exportSummary(); }
-function addDonation(){ window.addDonation && window.addDonation(); }
-function removeDonation(id){ window.removeDonation && window.removeDonation(id); }
 function saveDeadline(){ window.saveDeadline && window.saveDeadline(); }
 function openEntries(){ window.openEntries && window.openEntries(); }
 function lockEntries(){ window.lockEntries && window.lockEntries(); }
@@ -1082,7 +982,7 @@ if(isIos && !isInStandaloneMode) { setTimeout(function(){ document.getElementByI
 <script>
 // Swipe navigation
 (function() {
-  var tabs = ['entries','draw','leaderboard','history','rules','funds','settings'];
+  var tabs = ['entries','draw','leaderboard','history','rules','settings'];
   var touchStartX = 0, touchEndX = 0, touchStartY = 0, touchEndY = 0;
 
   function getCurrentTabIndex() {
@@ -1105,7 +1005,6 @@ if(isIos && !isInStandaloneMode) { setTimeout(function(){ document.getElementByI
     if(tabEls[index]) tabEls[index].scrollIntoView({ behavior:'smooth', block:'nearest', inline:'center' });
     if(tabs[index]==='leaderboard' && window._showTab) window._showTab('leaderboard',{});
     if(tabs[index]==='history' && window._showTab) window._showTab('history',{});
-    if(tabs[index]==='funds' && window._showTab) window._showTab('funds',{});
   }
 
   document.addEventListener('touchstart', function(e) {
@@ -1125,5 +1024,6 @@ if(isIos && !isInStandaloneMode) { setTimeout(function(){ document.getElementByI
 })();
 </script>
 
+</div><!-- end appContent -->
 </body>
 </html>
