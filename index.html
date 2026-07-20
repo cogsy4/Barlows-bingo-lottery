@@ -107,7 +107,6 @@
 <div id="viewModeBanner" style="display:none;background:linear-gradient(90deg,#3a86ff,#8338ec);padding:8px 16px;text-align:center;font-size:0.85rem;font-weight:700;color:#fff;position:sticky;top:0;z-index:100">
   👁️ VIEW ONLY MODE — You can see all entries and results but cannot make changes.
   <button onclick="showPinOverlay()" style="background:#fff;color:#3a86ff;border:none;border-radius:20px;padding:3px 12px;font-size:0.75rem;font-weight:800;cursor:pointer;margin-left:10px;font-family:'DM Sans',sans-serif">Admin Login</button>
-</div>
 </div><!-- end loginPage -->
 
 <div id="appContent">
@@ -708,8 +707,7 @@ window.exportCSV=function(){
 
 window.exportSummary=function(){
   const total=entries.reduce((s,e)=>s+(e.amount||2.50),0);
-    const pct=Math.min((grandTotal/2000)*100,100).toFixed(1);
-  const sorted=[...entries].sort((a,b)=>b.hits.length-a.hits.length);
+    const sorted=[...entries].sort((a,b)=>b.hits.length-a.hits.length);
   let txt='🎱 LOTTERY BINGO AT BARLOWS\n'+'='.repeat(40)+'\nReport: '+new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'})+'\n\n💰 FINANCIALS\n'+'-'.repeat(30)+'\nTotal Entries:         '+entries.length+'\nTotal Pot:             £'+total.toFixed(2)+'\nPrize (100%):          £'+total.toFixed(2)\n\n🏆 LEADERBOARD\n'+'-'.repeat(30)+'\n';
   sorted.forEach((e,i)=>{txt+=(i+1)+'. '+e.name.padEnd(20)+'█'.repeat(e.hits.length)+'░'.repeat(6-e.hits.length)+' '+e.hits.length+'/6'+(e.won?' WINNER!':'')+'\n';});
   txt+='\n📅 DRAWS PROCESSED: '+draws.length+'\n';
