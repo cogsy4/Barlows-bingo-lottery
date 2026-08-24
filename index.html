@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Barlows Bingo</title>
 <meta name="description" content="Lottery Bingo at Barlows — match all 6 numbers to win!">
 <meta name="theme-color" content="#f5c842">
@@ -10,6 +10,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Barlows Bingo">
 <meta name="mobile-web-app-capable" content="yes">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="format-detection" content="telephone=no">
 <link rel="manifest" href="data:application/json;charset=utf-8,%7B%22name%22%3A%22Lottery%20Bingo%20at%20Barlows%22%2C%22short_name%22%3A%22Barlows%20Bingo%22%2C%22start_url%22%3A%22.%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%220d1117%22%2C%22theme_color%22%3A%22f5c842%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%2520xmlns%3D%2527http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%2527%2520viewBox%3D%25270%25200%2520100%2520100%2527%253E%253Ctext%2520y%3D%2527.9em%2527%2520font-size%3D%252790%2527%253E%25F0%259F%258E%25B1%253C%2Ftext%253E%253C%2Fsvg%253E%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%7D%5D%7D">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap');
@@ -76,6 +78,25 @@
   .rank.gold { color: #f5c842; } .rank.silver { color: #bdc3c7; } .rank.bronze { color: #cd7f32; }
   .swipe-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--border); transition: all 0.3s; }
   .swipe-dot.active { background: var(--gold); width: 18px; border-radius: 4px; }
+
+  /* iOS & Samsung fixes */
+  * { -webkit-tap-highlight-color: transparent; }
+  body { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+  input, select, button { -webkit-appearance: none; -moz-appearance: none; appearance: none; font-family: 'DM Sans', sans-serif; }
+  input[type="number"] { -moz-appearance: textfield; }
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  .btn { -webkit-appearance: none; cursor: pointer; touch-action: manipulation; }
+  .tab { touch-action: manipulation; -webkit-tap-highlight-color: transparent; cursor: pointer; }
+  .entry-card { -webkit-overflow-scrolling: touch; }
+  .tabs { -webkit-overflow-scrolling: touch; scroll-behavior: smooth; }
+  .panel { -webkit-overflow-scrolling: touch; }
+  /* Fix iOS 100vh issue */
+  body { min-height: 100vh; min-height: -webkit-fill-available; }
+  /* Samsung Internet fixes */
+  @supports (-webkit-touch-callout: none) {
+    .btn { padding: 12px 22px; }
+  }
 </style>
 </head>
 <body>
@@ -97,10 +118,10 @@
     style="text-align:center;font-size:1.5rem;letter-spacing:8px;padding:14px 20px;width:240px;max-width:90vw;background:#1e2530;border:2px solid #30363d;border-radius:10px;color:#fff;font-family:'DM Sans',sans-serif;outline:none;-webkit-appearance:none;appearance:none;display:block;margin-top:8px" />
   <div id="pinError" style="color:#e74c3c;font-size:0.85rem;display:none;text-align:center">❌ Incorrect PIN — try again</div>
   <div style="width:240px;max-width:90vw;margin-top:4px">
-    <button onclick="checkPinGlobal()" style="width:100%;background:#f5c842;color:#000;border:none;border-radius:8px;padding:16px;font-weight:700;font-size:1rem;cursor:pointer;font-family:'DM Sans',sans-serif;-webkit-appearance:none;appearance:none;display:block;touch-action:manipulation;-webkit-tap-highlight-color:transparent">🔓 Unlock Admin</button>
+    <button ontouchend="checkPinGlobal()" onclick="checkPinGlobal()" style="width:100%;background:#f5c842;color:#000;border:none;border-radius:8px;padding:16px;font-weight:700;font-size:1rem;cursor:pointer;font-family:'DM Sans',sans-serif;-webkit-appearance:none;appearance:none;display:block;touch-action:manipulation;-webkit-tap-highlight-color:transparent" min-height:52px">🔓 Unlock Admin</button>
   </div>
   <div style="width:240px;max-width:90vw;margin-top:4px">
-    <button onclick="enterViewMode()" style="width:100%;background:#1e2530;color:#8b949e;border:1px solid #30363d;border-radius:8px;padding:16px;font-weight:600;font-size:1rem;cursor:pointer;font-family:'DM Sans',sans-serif;-webkit-appearance:none;appearance:none;display:block;touch-action:manipulation;-webkit-tap-highlight-color:transparent">👁️ View Only</button>
+    <button ontouchend="enterViewMode()" onclick="enterViewMode()" style="width:100%;background:#1e2530;color:#8b949e;border:1px solid #30363d;border-radius:8px;padding:16px;font-weight:600;font-size:1rem;cursor:pointer;font-family:'DM Sans',sans-serif;-webkit-appearance:none;appearance:none;display:block;touch-action:manipulation;-webkit-tap-highlight-color:transparent" min-height:52px">👁️ View Only</button>
   </div>
 </div>
 
@@ -318,6 +339,7 @@ var GLOBAL_PIN = '5505';
 var adminUnlocked = false;
 
 function checkPinGlobal() {
+  if(window._pinFired) return; window._pinFired = true; setTimeout(function(){ window._pinFired=false; }, 1000);
   var val = document.getElementById('pinInput').value;
   if (val === GLOBAL_PIN) {
     adminUnlocked = true;
@@ -325,6 +347,7 @@ function checkPinGlobal() {
     document.getElementById('appContent').style.display = 'block';
     document.getElementById('viewModeBanner').style.display = 'none';
     document.querySelectorAll('.admin-only').forEach(function(el){ el.style.display=''; });
+    if(window._updatePot) window._updatePot();
     showToastGlobal('🔓 Admin mode unlocked!');
   } else {
     document.getElementById('pinError').style.display = 'block';
@@ -333,10 +356,12 @@ function checkPinGlobal() {
 }
 
 function enterViewMode() {
+  if(window._viewFired) return; window._viewFired = true; setTimeout(function(){ window._viewFired=false; }, 1000);
   document.getElementById('loginPage').style.display = 'none';
   document.getElementById('appContent').style.display = 'block';
   document.getElementById('viewModeBanner').style.display = 'block';
   document.querySelectorAll('.admin-only').forEach(function(el){ el.style.display='none'; });
+  if(window._updatePot) window._updatePot();
 }
 
 function showPinOverlay() {
@@ -482,6 +507,7 @@ function renderEntries() {
   }).join('');
 }
 
+window._updatePot = function() { updatePot(); };
 function updatePot() {
   const total=entries.reduce((s,e)=>s+(e.amount||2.50),0);
   document.getElementById('potBanner').textContent=
