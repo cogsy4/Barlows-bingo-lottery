@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="format-detection" content="telephone=no">
+<meta name="color-scheme" content="dark">
 <title>Barlows Bingo</title>
 <meta name="description" content="Lottery Bingo at Barlows — match all 6 numbers to win!">
 <meta name="theme-color" content="#f5c842">
@@ -10,8 +13,6 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Barlows Bingo">
 <meta name="mobile-web-app-capable" content="yes">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="format-detection" content="telephone=no">
 <link rel="manifest" href="data:application/json;charset=utf-8,%7B%22name%22%3A%22Lottery%20Bingo%20at%20Barlows%22%2C%22short_name%22%3A%22Barlows%20Bingo%22%2C%22start_url%22%3A%22.%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%220d1117%22%2C%22theme_color%22%3A%22f5c842%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%2520xmlns%3D%2527http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%2527%2520viewBox%3D%25270%25200%2520100%2520100%2527%253E%253Ctext%2520y%3D%2527.9em%2527%2520font-size%3D%252790%2527%253E%25F0%259F%258E%25B1%253C%2Ftext%253E%253C%2Fsvg%253E%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%7D%5D%7D">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap');
@@ -21,7 +22,7 @@
     --text: #e6edf3; --muted: #8b949e;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; overflow-wrap: break-word; word-wrap: break-word; padding-bottom: env(safe-area-inset-bottom); padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right); }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; overflow-wrap: break-word; word-wrap: break-word; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; padding-bottom: env(safe-area-inset-bottom); padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right); }
   header { background: linear-gradient(135deg, #1a1f2e 0%, #0d1117 100%); border-bottom: 2px solid var(--gold); padding: 20px 24px; text-align: center; }
   header h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(1.8rem, 5vw, 3.2rem); letter-spacing: 3px; color: var(--gold); text-shadow: 0 0 30px rgba(245,200,66,0.4); }
   header p { color: var(--muted); font-size: 0.9rem; margin-top: 4px; }
@@ -128,47 +129,14 @@
   <p>Match all 6 numbers first to win the pot!</p>
 </header>
 
-<div id="loginPage">
-<style>
-#loginPage {
-  position:fixed;top:0;left:0;right:0;bottom:0;
-  background:#0d1117;
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  padding:30px 20px;gap:14px;
-  z-index:9999;box-sizing:border-box;
-}
-#loginPage h1 { font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:#f5c842;letter-spacing:3px;text-align:center;margin:0; }
-#loginPage p { color:#8b949e;font-size:0.95rem;text-align:center;margin:0;max-width:260px; }
-#pinInput {
-  text-align:center;font-size:1.4rem;letter-spacing:6px;
-  padding:14px;width:240px;max-width:85vw;
-  background:#1e2530;border:2px solid #30363d;
-  border-radius:10px;color:#fff;
-  font-family:'DM Sans',sans-serif;
-  -webkit-appearance:none;appearance:none;
-  outline:none;display:block;
-  box-sizing:border-box;
-}
-#pinError { color:#e74c3c;font-size:0.85rem;display:none;text-align:center; }
-.login-btn {
-  width:240px;max-width:85vw;padding:16px;
-  border:none;border-radius:10px;
-  font-weight:700;font-size:1.1rem;
-  font-family:'DM Sans',sans-serif;
-  cursor:pointer;display:block;
-  -webkit-appearance:none;appearance:none;
-  margin:0;box-sizing:border-box;
-}
-.login-btn-gold { background:#f5c842;color:#000; }
-.login-btn-dark { background:#1e2530;color:#8b949e;border:1px solid #30363d !important; }
-</style>
-<h1>🎱 Barlows Bingo</h1>
-<p>Enter your PIN to make changes, or tap View Only to browse</p>
-<input id="pinInput" type="password" inputmode="numeric" maxlength="6" placeholder="PIN" />
-<div id="pinError">❌ Incorrect PIN — try again</div>
-<button class="login-btn login-btn-gold" onclick="checkPinGlobal()">🔓 Unlock Admin</button>
-<button class="login-btn login-btn-dark" onclick="enterViewMode()">👁️ View Only</button>
+<div id="loginPage" style="background:#0d1117;position:fixed;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px 20px;gap:16px;box-sizing:border-box;z-index:9999;overflow-y:auto;">
+  <div style="font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:#f5c842;letter-spacing:3px;text-align:center;line-height:1.1">🎱<br>BARLOWS BINGO</div>
+  <div style="color:#8b949e;font-size:1rem;text-align:center;max-width:280px;line-height:1.5">Enter your PIN to make changes,<br>or tap View Only to browse</div>
+  <input id="pinInput" type="password" inputmode="numeric" maxlength="6" placeholder="Enter PIN"
+    style="text-align:center;font-size:24px;letter-spacing:8px;padding:14px 10px;width:220px;max-width:80vw;background:#1e2530;border:2px solid #30363d;border-radius:12px;color:#fff;outline:none;display:block;-webkit-appearance:none;box-sizing:border-box;" />
+  <div id="pinError" style="color:#e74c3c;font-size:0.9rem;display:none;text-align:center">❌ Incorrect PIN — try again</div>
+  <button onclick="checkPinGlobal()" style="width:220px;max-width:80vw;background:#f5c842;color:#000;border:none;border-radius:12px;padding:18px;font-weight:700;font-size:1.1rem;cursor:pointer;display:block;-webkit-appearance:none;box-sizing:border-box;font-family:'DM Sans',sans-serif;">🔓 Unlock Admin</button>
+  <button onclick="enterViewMode()" style="width:220px;max-width:80vw;background:#1e2530;color:#8b949e;border:2px solid #30363d;border-radius:12px;padding:18px;font-weight:600;font-size:1.1rem;cursor:pointer;display:block;-webkit-appearance:none;box-sizing:border-box;font-family:'DM Sans',sans-serif;">👁️ View Only</button>
 </div><!-- end loginPage -->
 
 <div id="appContent">
@@ -326,7 +294,7 @@
       <li><span>2</span><span>Each entry picks <strong>6 numbers from 1–59</strong>, matching the National Lottery format.</span></li>
       <li><span>3</span><span>We use the <strong>Wednesday and Saturday Lotto draw numbers only</strong>. The Bonus Ball is <strong>NOT included</strong>.</span></li>
       <li><span>4</span><span>Each week, drawn numbers that match your picks get a <strong>✅</strong>. The aim is to match all 6 numbers first.</span></li>
-      <li><span>5</span><span><strong>First to match all 6 wins 75% of the total pot</strong> — the more entries, the bigger the prize! The remaining 25% goes to <strong>St Kentigern Hospice</strong>. If two or more players complete on the same draw, the winners' 75% is <strong>split equally</strong> between them.</span></li>
+      <li><span>5</span><span><strong>First to match all 6 wins 75% of the total pot</strong> — the more entries, the bigger the prize! The remaining 25% goes to <strong>St Kentigern Hospice</strong>. If two or more players complete on the same draw, the player who needed the <strong>fewest numbers in that draw</strong> wins outright. If still tied, the winners' 75% is <strong>split equally</strong> between them.</span></li>
       <li><span>6</span><span>Payment must be received before <strong>7:30pm on the day of each draw</strong>.<br><br>
         <strong>Bank Transfer:</strong><br>Bank: <strong>Chase Saver</strong><br>Name: <strong>Roy Caldwell</strong><br>Sort Code: <strong>60-84-07</strong><br>Account Number: <strong>99751443</strong><br><br>
         Or <strong>Cash</strong> — must be paid before the 7:30pm deadline.<br>
@@ -570,17 +538,33 @@ window.processDraw = async function() {
   try {
     await setDoc(doc(db,'draws',dateVal),{date:dateVal,dateStr,numbers:uniqueDrawn});
     const batch=writeBatch(db);
-    let results=[],winners=[];
+    let results=[],potentialWinners=[];
+    // First pass: calculate all new hits
     entries.forEach(e=>{
       if(e.won)return;
       const newHits=uniqueDrawn.filter(n=>e.numbers.includes(n)&&!e.hits.includes(n));
       const updatedHits=[...e.hits,...newHits];
       const won=updatedHits.length===6;
       if(newHits.length>0||won) batch.update(doc(db,'entries',e.id),{hits:updatedHits,won});
-      results.push({name:e.name,newHits,total:updatedHits.length});
-      if(won) winners.push(e.name);
+      results.push({name:e.name,newHits,total:updatedHits.length,id:e.id,won});
+      // Track potential winners with how many draws they needed
+      if(won) potentialWinners.push({name:e.name,drawsNeeded:draws.length+1,newHitsThisDraw:newHits.length});
     });
     await batch.commit();
+    // Determine true winner — fewest draws needed wins
+    // If multiple complete this draw, winner is who needed FEWEST new hits this draw
+    // (i.e. they only needed 1 more number vs someone who needed 2+ to complete)
+    let winners=[];
+    if(potentialWinners.length===1){
+      winners=[potentialWinners[0].name];
+    } else if(potentialWinners.length>1){
+      // Sort by fewest new hits needed this draw (closest to winning before this draw)
+      potentialWinners.sort((a,b)=>a.newHitsThisDraw-b.newHitsThisDraw);
+      const minHitsNeeded=potentialWinners[0].newHitsThisDraw;
+      // Only those who needed the fewest hits this draw are true winners
+      winners=potentialWinners.filter(w=>w.newHitsThisDraw===minHitsNeeded).map(w=>w.name);
+      // If still a tie (same number of hits needed), all tied players share the prize
+    }
     const card=document.getElementById('drawResultsCard');
     const res=document.getElementById('drawResults');
     card.style.display='block';
@@ -600,7 +584,10 @@ window.processDraw = async function() {
       setTimeout(()=>{
         exportCSV();
         exportSummary();
-        alert('🏆 WINNER! ' + winners.join(', ') + ' has matched all 6 numbers!\n\nThe full report has been auto-saved to your device.\n\nTap OK then use the Share Results button to announce to the group! 🎱');
+        const winMsg = winners.length > 1
+  ? '🏆 JOINT WINNERS!\n' + winners.join(' & ') + ' have both matched all 6 numbers!\n\nThe pot is split equally between them.\n\nThe full report has been auto-saved.\n\nTap OK then share the results! 🎱'
+  : '🏆 WINNER!\n' + winners[0] + ' has matched all 6 numbers!\n\nThe full report has been auto-saved.\n\nTap OK then use Share Results to announce! 🎱';
+alert(winMsg);
       }, 1500);
     }
   } catch(err){toast('❌ Error processing draw');setSyncBar('❌ Error','error');}
